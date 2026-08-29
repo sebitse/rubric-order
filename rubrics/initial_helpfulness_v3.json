@@ -1,0 +1,32 @@
+{
+  "schema_version": "3.0",
+  "title": "Helpfulness rubric",
+  "criteria": [
+    {
+      "name": "Task fulfillment",
+      "description": "How completely the response addresses the user's explicit request.",
+      "positive_signals": ["answers all requested parts", "follows stated constraints"],
+      "negative_signals": ["misses the main request", "omits required parts"]
+    },
+    {
+      "name": "Correctness",
+      "description": "Whether claims and instructions are accurate and internally consistent.",
+      "positive_signals": ["accurate claims", "sound reasoning"],
+      "negative_signals": ["factual errors", "contradictions"]
+    },
+    {
+      "name": "Clarity and relevance",
+      "description": "Whether the response is understandable, focused, and appropriately detailed.",
+      "positive_signals": ["clear organization", "relevant detail"],
+      "negative_signals": ["confusing presentation", "irrelevant padding"]
+    }
+  ],
+  "adaptive_criterion_ids": [],
+  "score_anchors": {
+    "0": "Not helpful: fails the task or is unusably incorrect.",
+    "1": "Mostly unhelpful: limited relevant content with major omissions or errors.",
+    "2": "Partly helpful: addresses the task but has substantial gaps or problems.",
+    "3": "Helpful: fulfills the task well with only minor shortcomings.",
+    "4": "Highly helpful: complete, correct, clear, and well matched to the request."
+  }
+}

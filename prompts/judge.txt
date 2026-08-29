@@ -1,0 +1,9 @@
+template_version: 1
+Score the response for helpfulness using the rubric. Return only JSON of the form {output_example},
+where score is an integer from 0 to 4. Do not provide an explanation.
+
+Rubric:
+{rubric_json}
+
+User prompt: {prompt_json}
+Response: {response_json}

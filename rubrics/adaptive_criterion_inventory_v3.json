@@ -1,0 +1,60 @@
+{
+  "schema_version": "3.0",
+  "inventory_version": "1.0",
+  "criteria": [
+    {
+      "id": "completeness_and_coverage",
+      "active": false,
+      "name": "Completeness and coverage",
+      "description": "Whether all material parts of the request are addressed.",
+      "positive_signals": ["covers every requested part", "does not omit a required deliverable"],
+      "negative_signals": ["leaves a requested part unanswered", "omits a required deliverable"],
+      "overlap_review": "Near-duplicate of Task fulfillment; excluded from the active whitelist."
+    },
+    {
+      "id": "instruction_and_constraint_adherence",
+      "active": false,
+      "name": "Instruction and constraint adherence",
+      "description": "Whether explicit instructions and constraints are followed.",
+      "positive_signals": ["follows explicit constraints", "uses the requested form when material"],
+      "negative_signals": ["violates an explicit constraint", "ignores a required form"],
+      "overlap_review": "Already explicit in Task fulfillment; excluded from the active whitelist."
+    },
+    {
+      "id": "actionability_and_practical_utility",
+      "active": true,
+      "name": "Actionability and practical utility",
+      "description": "When the request calls for action, whether the response gives feasible information the user can apply.",
+      "positive_signals": ["offers feasible next actions when requested", "makes recommendations operational"],
+      "negative_signals": ["gives unusably abstract advice", "omits necessary operational detail"],
+      "overlap_review": "Complements Task fulfillment for advice and planning; conditional wording avoids requiring action steps for every task."
+    },
+    {
+      "id": "appropriate_level_of_detail",
+      "active": true,
+      "name": "Appropriate level of detail",
+      "description": "Whether the amount of detail is proportionate to the request and its practical stakes.",
+      "positive_signals": ["includes detail needed for use", "is concise when the task is simple"],
+      "negative_signals": ["is too sparse to use", "adds detail that obscures the answer"],
+      "overlap_review": "Partly overlaps Clarity and relevance, but isolates response granularity rather than organization or topical focus."
+    },
+    {
+      "id": "uncertainty_and_limitation_handling",
+      "active": true,
+      "name": "Uncertainty and limitation handling",
+      "description": "When uncertainty or material limitations exist, whether they are represented proportionately and without fabrication.",
+      "positive_signals": ["calibrates uncertain claims", "states material limitations when relevant"],
+      "negative_signals": ["presents uncertainty as certainty", "invented limitations or unsupported confidence"],
+      "overlap_review": "Related to Correctness, but concerns calibration of epistemic status rather than factual accuracy alone."
+    },
+    {
+      "id": "supporting_justification_when_relevant",
+      "active": true,
+      "name": "Supporting justification when relevant",
+      "description": "When a conclusion or recommendation needs support, whether sufficient reasoning or evidence is supplied.",
+      "positive_signals": ["supports consequential conclusions", "connects recommendations to relevant reasons"],
+      "negative_signals": ["asserts a consequential conclusion without support", "uses reasoning unrelated to the conclusion"],
+      "overlap_review": "Related to Correctness; retained only for cases where inspectable support is needed, not as a universal verbosity requirement."
+    }
+  ]
+}

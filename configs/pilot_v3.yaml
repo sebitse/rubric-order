@@ -1,0 +1,79 @@
+{
+  "schema_version": "3.0",
+  "prompt_version": "3.0",
+  "updater_mode": "inventory_constrained",
+  "seed": 42,
+  "dataset": {
+    "path": "E:\\JUDGe\\HelpSteer2",
+    "format": "auto",
+    "columns": {"prompt": "prompt", "response": "response", "label": "helpfulness"},
+    "train_split": "train",
+    "validation_split": "validation"
+  },
+  "sampling": {
+    "calibration_blocks": 2,
+    "examples_per_score": 2,
+    "heldout_prompts": 10,
+    "responses_per_prompt": 2
+  },
+  "orders": ["ascending", "descending", "random", "reverse_random"],
+  "methods": ["static", "batch", "sequential"],
+  "models": {
+    "updater": "qwen3:14b",
+    "judge": "qwen3:14b",
+    "base_url": "http://localhost:11434",
+    "temperature": 0,
+    "context_length": 16384,
+    "updater_max_tokens": 650,
+    "judge_max_tokens": 25,
+    "seed": 42,
+    "timeout_seconds": 300,
+    "unload_after_stage": true,
+    "think": false
+  },
+  "rubric": {"initial": "rubrics/initial_helpfulness_v3.json", "max_validation_retries": 2},
+  "inventory_v3": {
+    "path": "rubrics/adaptive_criterion_inventory_v3.json",
+    "initial": "rubrics/initial_helpfulness_v3.json",
+    "core_reference": "rubrics/initial_helpfulness_v2.json",
+    "maximum_selected": 2
+  },
+  "prompts": {
+    "sequential": "prompts/update_sequential_inventory_v3.txt",
+    "batch": "prompts/induce_batch_inventory_v3.txt",
+    "judge": "prompts/judge_anchor_first_v2.txt",
+    "judge_absolute": "prompts/judge_absolute_v2.txt",
+    "judge_anchor_first": "prompts/judge_anchor_first_v2.txt"
+  },
+  "context": {
+    "safety_margin_tokens": 1024,
+    "minimum_observed_headroom_tokens": 256,
+    "max_prompt_characters": 1200,
+    "max_response_characters": 2400
+  },
+  "analysis": {"bootstrap_repetitions": 1000, "confidence": 0.95, "make_plots": true},
+  "repeat_control": {
+    "enabled": true,
+    "blocks": [0, 1],
+    "orders": ["random"],
+    "methods": ["batch", "sequential"],
+    "replicates": [1, 2]
+  },
+  "paired_source": {
+    "run": "runs/pilot-002",
+    "run_id": "pilot-002",
+    "sha256": {
+      "manifest": "99462581a835c6ef9986de4cef0208d8af99fa03cfdd084d647aa28aad104465",
+      "calibration_blocks": "bc058b2e8191dd6f50089a3e70542cdd78466c9d66fa8ca62c505c9316f202f2",
+      "heldout": "ee4970ad4bfd389c0f2d3e2f3a62b9ca935e55f7fd85c11da8f5c98aed0cd6b0"
+    }
+  },
+  "approved_judge_artifact": "runs/judge-validation-v2/judge_validation_summary.json",
+  "paired_analysis": {
+    "free_form_downstream_run": "runs/pilot-002-downstream-audit",
+    "unit": "matched calibration-block/order/heldout-response",
+    "outcomes": ["drift", "agreement", "score_instability", "repeat_noise", "score_distributions", "strict_flips", "tie_changes"]
+  },
+  "allow_partial_results": false,
+  "output_root": "runs"
+}

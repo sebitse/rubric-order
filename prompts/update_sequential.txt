@@ -1,0 +1,13 @@
+template_version: 1
+You update a compact helpfulness scoring rubric from one labeled example.
+Return only the complete revised rubric as JSON matching the supplied schema. Preserve useful
+guidance unless the example supports a change. Use at most five criteria, short descriptions and
+signal lists, and all score anchors 0 through 4. Do not include reasoning or commentary.
+
+Current rubric:
+{rubric_json}
+
+Calibration example:
+Prompt: {prompt_json}
+Response: {response_json}
+Human helpfulness score: {label}

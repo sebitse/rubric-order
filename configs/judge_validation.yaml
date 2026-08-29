@@ -1,0 +1,45 @@
+{
+  "schema_version": "2.0",
+  "prompt_version": "2.0",
+  "seed": 42,
+  "dataset": {
+    "path": "E:\\JUDGe\\HelpSteer2",
+    "format": "auto",
+    "columns": {"prompt": "prompt", "response": "response", "label": "helpfulness"},
+    "train_split": "train",
+    "validation_split": "validation"
+  },
+  "models": {
+    "updater": "qwen3:14b",
+    "judge": "llama3.1:8b",
+    "base_url": "http://localhost:11434",
+    "temperature": 0,
+    "context_length": 16384,
+    "updater_max_tokens": 650,
+    "judge_max_tokens": 25,
+    "seed": 42,
+    "timeout_seconds": 300,
+    "unload_after_stage": true,
+    "think": false
+  },
+  "rubric": {"initial": "rubrics/initial_helpfulness_v2.json", "max_validation_retries": 2},
+  "prompts": {
+    "sequential": "prompts/update_sequential_v2.txt",
+    "batch": "prompts/induce_batch_v2.txt",
+    "judge": "prompts/judge_absolute_v2.txt",
+    "judge_absolute": "prompts/judge_absolute_v2.txt",
+    "judge_anchor_first": "prompts/judge_anchor_first_v2.txt"
+  },
+  "judge_validation": {
+    "run_id": "judge-validation-v2",
+    "dev_per_score": 10,
+    "validation_per_score": 20,
+    "candidates": ["judge_absolute", "judge_anchor_first"],
+    "allow_qwen_fallback": false,
+    "gate": {"minimum_qwk": 0.30, "minimum_spearman": 0.30, "maximum_mae": 1.25}
+  },
+  "exclude_manifests": [
+    {"path": "runs/pilot-001/manifest.json", "required": true}
+  ],
+  "output_root": "runs"
+}

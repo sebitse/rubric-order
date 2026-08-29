@@ -1,0 +1,46 @@
+{
+  "seed": 42,
+  "dataset": {
+    "path": null,
+    "format": "auto",
+    "columns": {
+      "prompt": "prompt",
+      "response": "response",
+      "label": "helpfulness"
+    },
+    "train_split": "train",
+    "validation_split": "validation"
+  },
+  "sampling": {
+    "calibration_blocks": 10,
+    "examples_per_score": 2,
+    "heldout_prompts": 25,
+    "responses_per_prompt": 2
+  },
+  "orders": ["ascending", "descending", "random", "reverse_random"],
+  "methods": ["static", "batch", "sequential"],
+  "models": {
+    "updater": "qwen3:14b",
+    "judge": "llama3.1:8b",
+    "base_url": "http://localhost:11434",
+    "temperature": 0,
+    "context_length": 8192,
+    "updater_max_tokens": 650,
+    "judge_max_tokens": 25,
+    "seed": 42,
+    "timeout_seconds": 300,
+    "unload_after_stage": true
+  },
+  "analysis": {
+    "bootstrap_repetitions": 10000,
+    "confidence": 0.95,
+    "make_plots": true
+  },
+  "repeat_control": {
+    "enabled": true,
+    "blocks": [0, 4, 9],
+    "orders": ["random"],
+    "methods": ["batch", "sequential"],
+    "replicates": [1]
+  }
+}

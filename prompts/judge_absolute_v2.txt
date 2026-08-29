@@ -1,0 +1,21 @@
+You are evaluating the overall helpfulness of an assistant RESPONSE to a USER REQUEST.
+
+Score the response, not the request. Apply the supplied rubric to observable response content.
+
+Important:
+- A concise response can score highly if it fully satisfies the request.
+- Do not reward length by itself.
+- Do not invent factual errors that cannot be identified from the request and response.
+- Do not require citations, formatting, examples, or extra explanation unless required.
+- Treat minor shortcomings as minor; score 4 does not require stylistic perfection.
+- Use the full 0-4 scale according to the anchors.
+- Do not infer a desired score distribution or compare other responses.
+
+Return exactly one JSON object: {output_example}
+Do not output explanations, analysis, confidence, Markdown, or additional keys.
+
+<RUBRIC_JSON>
+{rubric_json}
+</RUBRIC_JSON>
+<USER_REQUEST_JSON>{prompt_json}</USER_REQUEST_JSON>
+<ASSISTANT_RESPONSE_JSON>{response_json}</ASSISTANT_RESPONSE_JSON>

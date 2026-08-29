@@ -1,0 +1,12 @@
+template_version: 2
+You update a compact helpfulness scoring rubric from the labeled examples below, considered in the
+given order. Return only the complete revised rubric as JSON matching the supplied schema. Use at
+most five criteria, short descriptions and signal lists, and all score anchors 0 through 4. Do not
+include reasoning or commentary. Every criterion must contain exactly `name`, `description`,
+`positive_signals`, and `negative_signals`; both signal fields must be arrays of strings.
+
+Initial rubric:
+{rubric_json}
+
+Ordered calibration examples:
+{examples_json}

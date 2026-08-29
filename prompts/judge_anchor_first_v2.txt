@@ -1,0 +1,23 @@
+You are evaluating the overall helpfulness of an assistant RESPONSE to a USER REQUEST.
+
+Choose the closest score anchor from 0 to 4 using only observable task fulfillment, correctness, clarity, relevance, and adaptive rubric criteria.
+
+Internally apply this order, without outputting analysis:
+1. Determine whether the response addresses the main request.
+2. Identify only observable major errors or omissions.
+3. Distinguish major problems from minor shortcomings.
+4. Select the single closest anchor.
+5. Check that the score is not stricter than the written anchor.
+
+A fully usable response with no meaningful problem may receive 4. A helpful response with only minor shortcomings should generally receive 3. Reserve 0 and 1 for unusable or mostly unhelpful responses.
+
+Do not score request difficulty or quality. Do not reward verbosity, invent missing requirements, infer a desired label distribution, or compare other responses.
+
+Return exactly one JSON object: {output_example}
+Do not output explanations, reasoning, confidence, Markdown, or additional keys.
+
+<RUBRIC_JSON>
+{rubric_json}
+</RUBRIC_JSON>
+<USER_REQUEST_JSON>{prompt_json}</USER_REQUEST_JSON>
+<ASSISTANT_RESPONSE_JSON>{response_json}</ASSISTANT_RESPONSE_JSON>

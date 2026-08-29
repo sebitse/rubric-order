@@ -1,0 +1,98 @@
+{
+  "schema_version": "2.0",
+  "prompt_version": "2.0",
+  "seed": 42,
+  "dataset": {
+    "path": "E:\\JUDGe\\HelpSteer2",
+    "format": "auto",
+    "columns": {"prompt": "prompt", "response": "response", "label": "helpfulness"},
+    "train_split": "train",
+    "validation_split": "validation"
+  },
+  "sampling": {
+    "calibration_blocks": 10,
+    "examples_per_score": 2,
+    "heldout_prompts": 25,
+    "responses_per_prompt": 2
+  },
+  "orders": ["ascending", "descending", "random", "reverse_random"],
+  "methods": ["static", "batch", "sequential"],
+  "models": {
+    "updater": "qwen3:14b",
+    "judge": "qwen3:14b",
+    "base_url": "http://localhost:11434",
+    "temperature": 0,
+    "context_length": 16384,
+    "updater_max_tokens": 650,
+    "judge_max_tokens": 25,
+    "seed": 42,
+    "timeout_seconds": 300,
+    "unload_after_stage": true,
+    "think": false
+  },
+  "rubric": {"initial": "rubrics/initial_helpfulness_v2.json", "max_validation_retries": 1},
+  "prompts": {
+    "sequential": "prompts/update_sequential_v2.txt",
+    "batch": "prompts/induce_batch_v2.txt",
+    "judge": "prompts/judge_anchor_first_v2.txt",
+    "judge_absolute": "prompts/judge_absolute_v2.txt",
+    "judge_anchor_first": "prompts/judge_anchor_first_v2.txt"
+  },
+  "context": {
+    "safety_margin_tokens": 1024,
+    "minimum_observed_headroom_tokens": 256,
+    "max_prompt_characters": 1200,
+    "max_response_characters": 2400
+  },
+  "analysis": {"bootstrap_repetitions": 10000, "confidence": 0.95, "make_plots": true},
+  "repeat_control": {
+    "enabled": true,
+    "blocks": [0, 4, 9],
+    "orders": ["random"],
+    "methods": ["batch", "sequential"],
+    "replicates": [1, 2]
+  },
+  "exclude_manifests": [
+    {"path": "runs/pilot-001/manifest.json", "required": true},
+    {"path": "runs/judge-validation-v2/manifest.json", "required": true},
+    {"path": "runs/pilot-002/manifest.json", "required": true}
+  ],
+  "approved_judge_artifact": "runs/judge-validation-v2/judge_validation_summary.json",
+  "drift_annotations": {
+    "required_before_judging": false,
+    "minimum_annotators": 1,
+    "freeze_relative_path": "artifacts/drift_annotations/annotation_freeze.json",
+    "export_unique_canonical_rubrics_only": true,
+    "optional_posthoc_inspection_only": true,
+    "manual_semantic_drift_rate_estimated_in_main": false,
+    "lexical_flags_are_ground_truth": false
+  },
+  "paper_design": {
+    "primary_question": "calibration-order dependence under fixed evidence",
+    "primary_methods": ["static", "batch", "sequential"],
+    "deferred_extensions": ["pilot-003", "inventory-v3", "constrained-ablation"],
+    "deferred_status": "optional future work; unused in current primary results",
+    "decision_timing": "before main execution",
+    "main_rubric_variation": ["structural metrics", "textual metrics"],
+    "main_downstream_effect": ["score instability", "agreement"],
+    "manual_thematic_drift_scope": "qualitative pilot-002 analysis only"
+  },
+  "execution_safety": {
+    "planned_physical_calls": 5156,
+    "hard_total_call_ceiling": 5200,
+    "stage_call_ceilings": {"build-rubrics": 520, "judge": 4680},
+    "max_retries_per_request": 1,
+    "max_error_rate": 0.01,
+    "max_consecutive_same_error": 3
+  },
+  "pre_main": {
+    "run_id": "main-final-primary",
+    "lineage_audit": "runs/pilot-002-downstream-audit/audit/extreme_pair_lineage_audit.json",
+    "downstream_audit": "runs/pilot-002-downstream-audit/audit/downstream_analysis.json",
+    "freeze_manifest": "dry_runs/pre-main/pre_main_freeze_primary_no_annotation.json",
+    "protocol": "docs/final_experiment_protocol.md",
+    "notebook": "notebooks/08_final_main_experiment.ipynb"
+  },
+  "allow_partial_results": false,
+  "output_root": "runs"
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": "2.0",
+  "prompt_version": "2.0",
+  "seed": 42,
+  "dataset": {
+    "path": "E:\\JUDGe\\HelpSteer2",
+    "format": "auto",
+    "columns": {"prompt": "prompt", "response": "response", "label": "helpfulness"},
+    "train_split": "train",
+    "validation_split": "validation"
+  },
+  "sampling": {
+    "calibration_blocks": 2,
+    "examples_per_score": 2,
+    "heldout_prompts": 10,
+    "responses_per_prompt": 2
+  },
+  "orders": ["ascending", "descending", "random", "reverse_random"],
+  "methods": ["static", "batch", "sequential"],
+  "models": {
+    "updater": "qwen3:14b",
+    "judge": "qwen3:14b",
+    "base_url": "http://localhost:11434",
+    "temperature": 0,
+    "context_length": 16384,
+    "updater_max_tokens": 650,
+    "judge_max_tokens": 25,
+    "seed": 42,
+    "timeout_seconds": 300,
+    "unload_after_stage": true,
+    "think": false
+  },
+  "rubric": {"initial": "rubrics/initial_helpfulness_v2.json", "max_validation_retries": 2},
+  "prompts": {
+    "sequential": "prompts/update_sequential_v2.txt",
+    "batch": "prompts/induce_batch_v2.txt",
+    "judge": "prompts/judge_anchor_first_v2.txt",
+    "judge_absolute": "prompts/judge_absolute_v2.txt",
+    "judge_anchor_first": "prompts/judge_anchor_first_v2.txt"
+  },
+  "context": {
+    "safety_margin_tokens": 1024,
+    "minimum_observed_headroom_tokens": 256,
+    "max_prompt_characters": 1200,
+    "max_response_characters": 2400
+  },
+  "analysis": {"bootstrap_repetitions": 1000, "confidence": 0.95, "make_plots": false},
+  "repeat_control": {
+    "enabled": true,
+    "blocks": [0, 1],
+    "orders": ["random"],
+    "methods": ["batch", "sequential"],
+    "replicates": [1, 2]
+  },
+  "approved_judge_artifact": "runs/judge-validation-v2/judge_validation_summary.json",
+  "downstream_audit": {
+    "source_run": "runs/pilot-002",
+    "source_content_inventory_sha256": "2075fb4d4ff3f843b2ab104515af2077cdae95176af87fb50b2a58538c23a587",
+    "source_judge_plan": "runs/pilot-002/dry_runs/judge_20260814T134936370890Z.json",
+    "manual_rubric_gate": "runs/pilot-002/artifacts/audits/manual_rubric_gate.json",
+    "recommended_run_id": "pilot-002-downstream-audit",
+    "dry_run_root": "dry_runs/downstream-audit"
+  },
+  "allow_partial_results": false,
+  "output_root": "runs"
+}
