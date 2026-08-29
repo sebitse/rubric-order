@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rubric-order"
+version = "0.1.0"
+description = "Calibration-order dependence experiments for frozen LLM judges"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+yaml = ["PyYAML>=6"]
+parquet = ["pyarrow>=14"]
+huggingface = ["datasets>=2.18"]
+plots = ["matplotlib>=3.8"]
+notebooks = ["jupyterlab>=4", "nbformat>=5.10", "nbclient>=0.10", "pandas>=2"]
+dev = ["pytest>=8", "ruff>=0.6", "nbformat>=5.10", "nbclient>=0.10"]
+all = ["PyYAML>=6", "pyarrow>=14", "datasets>=2.18", "matplotlib>=3.8"]
+
+[project.scripts]
+rubric-order = "rubric_order.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["HelpSteer2", "runs", "test.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
